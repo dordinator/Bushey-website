@@ -4,7 +4,7 @@ strap: What kit each squad actually needs, what it does, and what you can skip f
 order: 5
 icon: kit
 keyTakeaways:
-  - Dolphins and Sharks need the basics: suit, goggles, hat, bottle, towel
+  - "Dolphins and Sharks need the basics: suit, goggles, hat, bottle, towel"
   - Kit builds as swimmers move up squads. Don't buy ahead of need
   - Fins, paddles and snorkels are training tools with specific jobs
   - Racing extras (spare goggles, racing suit) only matter once you're galas regularly
