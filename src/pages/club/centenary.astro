@@ -97,13 +97,22 @@ const decades = [
         three. This page is where we tell the story, and we need your help to finish it.
       </p>
       <div class="gold-rule reveal mx-auto mt-10 max-w-md" style="--reveal-delay: 0.26s"></div>
+
+      <a href="#timeline" class="scroll-cue reveal group mx-auto mt-12 flex w-fit flex-col items-center gap-3" style="--reveal-delay: 0.34s">
+        <span class="eyebrow text-white/60 transition group-hover:text-white">Scroll through the decades</span>
+        <span class="scroll-cue__chevron flex h-11 w-11 items-center justify-center rounded-full border border-white/25 text-gold-400 transition group-hover:border-gold-400" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </span>
+      </a>
     </div>
 
     <WaveDivider fill="#ffffff" />
   </section>
 
   <!-- Scroll-driven timeline -->
-  <section class="bg-white py-16 sm:py-24" data-timeline>
+  <section id="timeline" class="scroll-mt-24 bg-white py-16 sm:py-24" data-timeline>
     <div class="mx-auto max-w-4xl px-5 sm:px-8">
       <div class="relative">
         <!-- Track + scroll-driven progress line -->
@@ -205,6 +214,20 @@ const decades = [
     strap="There's never been a better year to join Bushey ASC. New members of all abilities welcome."
   />
 </Base>
+
+<style>
+  /* Gentle bob on the scroll cue so it reads as "there's more below" */
+  .scroll-cue__chevron {
+    animation: scroll-cue-bob 1.8s var(--ease-swim) infinite;
+  }
+  @keyframes scroll-cue-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-cue__chevron { animation: none; }
+  }
+</style>
 
 <script>
   // Scroll-driven progress line for the centenary timeline.

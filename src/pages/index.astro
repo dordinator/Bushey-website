@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
-import WaterCanvas from "../components/WaterCanvas.astro";
 import WaveDivider from "../components/WaveDivider.astro";
 import SquadPathway from "../components/SquadPathway.astro";
 import SectionHeader from "../components/SectionHeader.astro";
@@ -23,79 +22,51 @@ const hub = (await getCollection("hub")).sort((a, b) => a.data.order - b.data.or
 const MONTH_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 ---
 
-<Base title={site.shortName} description="Bushey Amateur Swimming Club, one hundred years of technique-first swimming in Hertfordshire. Squads from age 5 to Masters, county-level competition, and a friendly volunteer-run community.">
-  <!-- ============ HERO ============ -->
-  <section class="relative flex min-h-[92svh] items-center overflow-hidden bg-white">
-    <div
-      class="absolute inset-0"
-      style="background:
-        radial-gradient(110% 90% at 80% -15%, color-mix(in srgb, var(--color-aqua-400) 16%, transparent) 0%, transparent 55%),
-        radial-gradient(95% 85% at -5% 110%, color-mix(in srgb, var(--color-foam-200) 80%, transparent) 0%, transparent 60%),
-        linear-gradient(180deg, var(--color-foam-50) 0%, #ffffff 85%);"
-      aria-hidden="true"
-    >
-    </div>
-    <WaterCanvas variant="light" />
+<Base title={site.shortName} description="Bushey Amateur Swimming Club, a small, friendly, volunteer-run club at Bushey Grove teaching sound technique to swimmers aged 5 to 18, from first lengths to county galas. New members of all abilities welcome.">
+  <!-- ============ HERO (photo collage) ============ -->
+  <section class="relative overflow-hidden bg-foam-50 pt-28 pb-24 sm:pt-32 sm:pb-32">
+    <div class="mx-auto grid w-full max-w-7xl items-center gap-10 px-5 sm:px-8 lg:grid-cols-[minmax(0,37rem)_minmax(0,1fr)] lg:gap-14">
+      <!-- Title -->
+      <div>
+        <h1 class="display reveal text-[clamp(2.6rem,5.4vw,4.6rem)] text-deep-900" style="--reveal-delay: 0.08s">
+          A century of Bushey swimming
+        </h1>
 
-    <div class="relative mx-auto w-full max-w-7xl px-5 pb-32 pt-32 sm:px-8 sm:pt-36">
-      <div class="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-        <div>
-          <p class="eyebrow reveal flex flex-wrap items-center gap-3 text-aqua-600">
-            <span class="inline-block h-px w-10 bg-aqua-500" aria-hidden="true"></span>
-            Bushey Amateur Swimming Club · Hertfordshire
-          </p>
+        <p class="reveal mt-6 max-w-md text-base leading-relaxed text-ink-600 sm:text-lg" style="--reveal-delay: 0.14s">
+          A small, friendly, volunteer-run club at Bushey Grove — our qualified coaches help
+          swimmers aged 5 to 18 build sound technique, from first lengths to county galas.
+          New members of all abilities welcome.
+        </p>
 
-          <h1 class="display reveal mt-6 text-[clamp(3rem,8vw,6.5rem)]" style="--reveal-delay: 0.1s">
-            <span class="block text-deep-800">A century</span>
-            <span class="shimmer-text-ink block">in the water.</span>
-          </h1>
-
-          <p class="reveal mt-8 max-w-xl text-lg leading-relaxed text-ink-600 sm:text-xl" style="--reveal-delay: 0.2s">
-            Founded 1926. Volunteer-run, technique-first, and still putting local swimmers on the
-            blocks every weekend. From first lengths at five to county finals at eighteen. This is
-            where Bushey swims.
-          </p>
-
-          <div class="reveal mt-10 flex flex-wrap items-center gap-4" style="--reveal-delay: 0.3s">
-            <a
-              href="/join"
-              class="group inline-flex items-center gap-3 rounded-full bg-deep-800 px-8 py-4 text-base font-bold text-white transition hover:bg-deep-700 hover:shadow-xl hover:shadow-deep-800/20"
-            >
-              Join the club
-              <span class="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">→</span>
-            </a>
-            <a
-              href="/train/squads"
-              class="inline-flex items-center gap-3 rounded-full border-2 border-foam-200 px-8 py-4 text-base font-bold text-deep-800 transition hover:border-aqua-400 hover:text-aqua-600"
-            >
-              Explore the squads
-            </a>
-          </div>
+        <div class="reveal mt-8 flex flex-wrap items-center gap-x-6 gap-y-3.5 lg:flex-nowrap" style="--reveal-delay: 0.2s">
+          <a href="/join" class="btn-primary press whitespace-nowrap">Join the club <span aria-hidden="true">→</span></a>
+          <a href="/compete/fixtures" class="btn-outline press whitespace-nowrap">Upcoming galas <span aria-hidden="true">→</span></a>
+          <a href="/train/squads" class="btn-quiet swim-link whitespace-nowrap">Meet the squads <span aria-hidden="true">→</span></a>
         </div>
+      </div>
 
-        <!-- Hero image -->
-        <div class="reveal relative" style="--reveal-delay: 0.25s">
-          <div class="absolute -inset-3 rotate-2 rounded-[2rem] bg-gradient-to-br from-aqua-400/40 to-gold-400/30" aria-hidden="true"></div>
-          <img
-            src="/images/welcome-slider.png"
-            alt="A Bushey ASC swimmer mid-butterfly stroke"
-            class="relative w-full -rotate-1 rounded-[2rem] object-cover shadow-2xl shadow-deep-900/25 transition-transform duration-700 hover:rotate-0"
-            width="1024"
-            height="440"
-            fetchpriority="high"
-          />
-          <div class="absolute -bottom-5 -left-5 flex items-center gap-3 rounded-2xl bg-white px-5 py-3 shadow-xl shadow-deep-900/10">
-            <img src="/images/centenary-badge.png" alt="" class="h-10 w-10 object-contain" width="40" height="40" />
-            <div class="leading-tight">
-              <p class="display text-sm text-deep-800">100 years</p>
-              <p class="text-xs text-ink-400">of Bushey swimming</p>
-            </div>
-          </div>
+      <!-- Photo collage. Tiles auto-rotate (one at a time, never a duplicate). -->
+      <div class="hero-collage reveal h-[440px] lg:h-[560px]" style="--reveal-delay: 0.15s" data-collage>
+        <div class="hero-tile" style="grid-column: 1 / 5; grid-row: 1 / 4;">
+          <img src="/images/team-trophy.jpg" alt="The Bushey ASC squad with their trophy" style="object-position: center 42%;" />
+          <span class="display" style="position:absolute; left:12px; bottom:12px; background: var(--color-gold-400); color: var(--color-deep-900); font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px;">100 years in 2026</span>
+        </div>
+        <div class="hero-tile" style="grid-column: 5 / 7; grid-row: 1 / 5;">
+          <img src="/images/team-gala.jpg" alt="Bushey ASC swimmers at a gala" style="object-position: center 30%;" />
+        </div>
+        <div class="hero-tile" style="grid-column: 1 / 3; grid-row: 4 / 7;">
+          <img src="/images/medals-four.jpg" alt="Bushey swimmers with their medals" style="object-position: center 18%;" />
+        </div>
+        <div class="hero-tile" style="grid-column: 3 / 5; grid-row: 4 / 7;">
+          <img src="/images/mayor.jpg" alt="A Bushey swimmer meets the mayor" style="object-position: center 30%;" />
+        </div>
+        <div class="hero-tile" style="grid-column: 5 / 7; grid-row: 5 / 7;">
+          <img src="/images/news-herts-aquatics-1.jpeg" alt="Young swimmers with medals" style="object-position: center 12%;" />
         </div>
       </div>
     </div>
 
-    <WaveDivider fill="var(--color-gold-400)" class="z-10" />
+    <WaveDivider fill="var(--color-gold-400)" height="h-10 sm:h-16" class="z-10" />
   </section>
 
   <!-- ============ CENTENARY BAND ============ -->
@@ -119,45 +90,38 @@ const MONTH_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Se
     </a>
   </section>
 
-  <!-- ============ SQUAD PATHWAY (dark accent section) ============ -->
-  <section class="relative overflow-hidden bg-deep-900 py-20 text-white sm:py-28">
-    <div
-      class="absolute inset-0"
-      style="background: radial-gradient(80% 100% at 90% 10%, color-mix(in srgb, var(--color-aqua-500) 14%, transparent) 0%, transparent 55%);"
-      aria-hidden="true"
-    >
-    </div>
-    <div class="relative mx-auto max-w-7xl px-5 sm:px-8">
+  <!-- ============ SQUAD PATHWAY ============ -->
+  <section class="relative overflow-hidden bg-white py-20 sm:py-28">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
       <SectionHeader
-        dark
-        eyebrow="The pathway"
-        title="One lane, seven steps"
-        strap="Every Bushey swimmer follows the same pathway, from first strokes in Dolphins to county finals with Performance. Tap a squad to see where your swimmer fits."
+        title="How swimmers progress at Bushey"
+        strap="Everyone starts in the same place. Swimmers move up a squad when they're ready — never before — so the route from first lengths to race day is the same for every child. Tap a squad to see what happens there."
       />
       <div class="reveal mt-12" style="--reveal-delay: 0.15s">
         <SquadPathway />
       </div>
+      <p class="reveal mt-10 text-sm text-ink-600">
+        Not sure where your swimmer would fit? Don't worry about picking — come along for a&nbsp;<a href="/join" class="swim-link font-bold text-aqua-600 hover:text-deep-800">trial swim</a> and the coaches will find the right squad.
+      </p>
     </div>
   </section>
 
   <!-- ============ NEWS + FIXTURES ============ -->
-  <section class="bg-white py-20 sm:py-28">
+  <section class="bg-foam-50 py-20 sm:py-28">
     <div class="mx-auto max-w-7xl px-5 sm:px-8">
       <div class="grid gap-16 lg:grid-cols-[1.6fr_1fr]">
         <!-- News -->
-        <div>
-          <div class="flex flex-wrap items-end justify-between gap-4">
-            <SectionHeader eyebrow="Latest" title="Club news" />
-            <a href="/news" class="reveal mb-1 text-sm font-bold text-deep-600 underline decoration-aqua-400 underline-offset-4 hover:text-aqua-600">
-              All news →
-            </a>
-          </div>
-          <div class="mt-10 grid gap-6">
+        <div class="flex flex-col">
+          <SectionHeader eyebrow="Latest" title="Club news" />
+          <a href="/news" class="swim-link reveal mt-2 self-start py-1 text-sm font-bold text-aqua-600 hover:text-deep-800">
+            All news →
+          </a>
+          <div class="mt-8 grid flex-1 auto-rows-fr gap-6">
             {
               news.map((post, i) => (
                 <a
                   href={`/news/${post.id}`}
-                  class="card-lift reveal group grid overflow-hidden rounded-3xl border border-foam-200 bg-foam-50 sm:grid-cols-[180px_1fr]"
+                  class="card-lift reveal group grid overflow-hidden rounded-3xl border border-foam-200 bg-white sm:grid-cols-[180px_1fr]"
                   style={`--reveal-delay: ${i * 0.08}s`}
                 >
                   {
@@ -172,12 +136,12 @@ const MONTH_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Se
                       />
                     ) : (
                       <div class="flex h-36 items-center justify-center bg-deep-900 sm:h-full" aria-hidden="true">
-                        <img src="/images/basc-logo-round.jpeg" alt="" class="h-16 w-16 rounded-full object-cover opacity-90" width="64" height="64" loading="lazy" />
+                        <img src="/images/logo-badge.png" alt="" class="h-16 w-16 object-contain opacity-90 invert" width="64" height="64" loading="lazy" />
                       </div>
                     )
                   }
-                  <div class="p-6">
-                    <span class="text-xs font-bold uppercase tracking-[0.18em] text-gold-500">
+                  <div class="flex flex-col justify-center p-6">
+                    <span class="text-xs font-bold uppercase tracking-[0.18em] text-gold-600">
                       {post.data.category} · {post.data.date.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
                     </span>
                     <h3 class="mt-1.5 text-xl font-bold text-deep-800 transition group-hover:text-aqua-600">{post.data.title}</h3>
@@ -190,24 +154,22 @@ const MONTH_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Se
         </div>
 
         <!-- Upcoming galas -->
-        <div>
-          <div class="flex flex-wrap items-end justify-between gap-4">
-            <SectionHeader eyebrow="On the blocks" title="Typical season ahead" />
-            <a href="/compete/fixtures" class="reveal mb-1 text-sm font-bold text-deep-600 underline decoration-aqua-400 underline-offset-4 hover:text-aqua-600">
-              Upcoming galas →
-            </a>
-          </div>
-          <div class="mt-10 overflow-hidden rounded-3xl bg-deep-900">
+        <div class="flex flex-col">
+          <SectionHeader eyebrow="On the blocks" title="The season ahead" />
+          <a href="/compete/fixtures" class="swim-link reveal mt-2 self-start py-1 text-sm font-bold text-aqua-600 hover:text-deep-800">
+            Upcoming galas →
+          </a>
+          <div class="mt-8 flex flex-1 flex-col overflow-hidden rounded-3xl bg-deep-900">
             {
               galas.map((gala, i) => (
-                <div class:list={["reveal p-6", i > 0 && "border-t border-white/10"]} style={`--reveal-delay: ${i * 0.08}s`}>
-                  <p class="text-xs font-bold uppercase tracking-wider text-aqua-400">{MONTH_SHORT[gala.month - 1]} · {gala.level}</p>
+                <div class:list={["reveal flex flex-1 flex-col justify-center p-6", i > 0 && "border-t border-white/10"]} style={`--reveal-delay: ${i * 0.08}s`}>
+                  <p class="text-xs font-bold uppercase tracking-wider text-gold-400">{MONTH_SHORT[gala.month - 1]} · {gala.level}</p>
                   <h3 class="mt-1.5 font-bold text-white">{gala.name}</h3>
                   <p class="mt-1 text-sm text-white/55">{gala.typicalTiming}</p>
                 </div>
               ))
             }
-            <a href="/compete/guide" class="block bg-aqua-400 p-5 text-center text-sm font-bold text-deep-900 transition hover:bg-aqua-300">
+            <a href="/compete/guide" class="block bg-gold-400 p-5 text-center text-sm font-bold text-deep-900 transition hover:bg-gold-300">
               First gala? Read our competing guide →
             </a>
           </div>
@@ -217,7 +179,7 @@ const MONTH_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Se
   </section>
 
   <!-- ============ ATHLETE HUB TEASER ============ -->
-  <section class="relative overflow-hidden bg-foam-50 py-20 sm:py-28">
+  <section class="relative overflow-hidden bg-white py-20 sm:py-28">
     <div class="pointer-events-none absolute -left-10 bottom-0 select-none" aria-hidden="true">
       <span class="display text-outline text-[14rem] leading-none text-deep-800/8">HUB</span>
     </div>
@@ -232,21 +194,97 @@ const MONTH_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Se
           hub.map((article, i) => (
             <a
               href={`/athlete-hub/${article.id}`}
-              class="card-lift reveal group rounded-3xl border border-foam-200 bg-white p-7"
+              class="card-lift reveal group flex flex-col rounded-3xl border border-foam-200 bg-foam-50 p-7"
               style={`--reveal-delay: ${(i % 3) * 0.08}s`}
             >
-              <span class="display block text-xs text-aqua-600" style="font-variation-settings: 'wdth' 90;">0{article.data.order}</span>
+              <span class="display block text-xs text-aqua-600">0{article.data.order}</span>
               <h3 class="display mt-3 text-2xl text-deep-800 transition group-hover:text-aqua-600">{article.data.title}</h3>
               <p class="mt-3 text-sm leading-relaxed text-ink-600">{article.data.strap}</p>
-              <span class="mt-5 inline-flex items-center gap-2 text-sm font-bold text-deep-600 transition group-hover:gap-3 group-hover:text-aqua-600">
+              <span class="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-bold text-aqua-600 transition group-hover:gap-3">
                 Read <span aria-hidden="true">→</span>
               </span>
             </a>
           ))
         }
+
+        <!-- Where to start: the hub's own guidance, so the section previews the hub properly -->
+        <div class="reveal flex flex-col rounded-3xl bg-deep-900 p-7 text-white" style="--reveal-delay: 0.16s">
+          <span class="display block text-xs text-gold-400">Where to start</span>
+          <ul class="mt-4 space-y-3 text-sm leading-relaxed text-white/75">
+            <li class="flex gap-3"><span class="font-bold text-gold-400" aria-hidden="true">1.</span> Parents of younger swimmers: start with Nutrition and the Equipment guide.</li>
+            <li class="flex gap-3"><span class="font-bold text-gold-400" aria-hidden="true">2.</span> Competing swimmers: start with Sleep &amp; Recovery.</li>
+            <li class="flex gap-3"><span class="font-bold text-gold-400" aria-hidden="true">3.</span> Top squads: all five, then ask your coach how to apply them.</li>
+          </ul>
+          <p class="mt-4 text-xs leading-relaxed text-white/50">Every guide follows Swim England guidance and links to their resources.</p>
+          <a href="/athlete-hub" class="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-bold text-gold-300 transition hover:gap-3 hover:text-gold-400">
+            Browse the whole hub <span aria-hidden="true">→</span>
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
   <CtaBand />
 </Base>
+
+<script>
+  // Hero collage auto-rotation: one tile at a time, crossfading, and the same
+  // photo can never appear in two tiles at once (it checks what's on screen at
+  // swap time). Respects prefers-reduced-motion. Tune SECONDS / CROSSFADE below.
+  (() => {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const collage = document.querySelector("[data-collage]");
+    if (!collage) return;
+
+    const SECONDS = 8;     // seconds between switches
+    const CROSSFADE = 0.8; // crossfade length in seconds
+
+    const pool = [
+      { src: "/images/team-trophy.jpg", pos: "center 42%" },
+      { src: "/images/team-gala.jpg", pos: "center 30%" },
+      { src: "/images/medals-four.jpg", pos: "center 18%" },
+      { src: "/images/mayor.jpg", pos: "center 30%" },
+      { src: "/images/news-herts-aquatics-1.jpeg", pos: "center 12%" },
+      { src: "/images/members-group.jpg", pos: "center 34%" },
+      { src: "/images/news-club-champs-group.jpg", pos: "center 30%" },
+      { src: "/images/news-herts-aquatics-2.jpeg", pos: "center 42%" },
+    ];
+    pool.forEach((p) => { const im = new Image(); im.src = p.src; });
+
+    const tiles = Array.from(collage.querySelectorAll(".hero-tile"));
+    const onScreen = () => new Set(tiles.map((t) => {
+      const imgs = t.querySelectorAll("img");
+      const top = imgs[imgs.length - 1];
+      return top ? top.getAttribute("src") : null;
+    }).filter(Boolean));
+
+    const swap = () => {
+      const tile = tiles[Math.floor(Math.random() * tiles.length)];
+      const base = tile.querySelector("img");
+      const shown = onScreen();
+      const opts = pool.filter((p) => !shown.has(p.src));
+      if (!opts.length) { setTimeout(swap, 4000); return; }
+      const pick = opts[Math.floor(Math.random() * opts.length)];
+
+      const ov = document.createElement("img");
+      ov.alt = "";
+      ov.style.cssText = `position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity ${CROSSFADE * 1000}ms ease;z-index:2`;
+      ov.style.objectPosition = pick.pos;
+      const finish = () => {
+        tile.appendChild(ov);
+        requestAnimationFrame(() => { ov.style.opacity = "1"; });
+        setTimeout(() => {
+          base.setAttribute("src", pick.src);
+          base.style.objectPosition = pick.pos;
+          setTimeout(() => ov.remove(), 160);
+          setTimeout(swap, SECONDS * 1000 * (0.85 + Math.random() * 0.3));
+        }, CROSSFADE * 1000 + 200);
+      };
+      ov.onload = finish;
+      ov.onerror = () => setTimeout(swap, 5000);
+      ov.src = pick.src;
+      if (ov.complete && ov.naturalWidth) finish();
+    };
+    setTimeout(swap, SECONDS * 1000);
+  })();
+</script>

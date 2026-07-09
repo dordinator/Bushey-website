@@ -1,6 +1,7 @@
 ---
-/** Interactive squad pathway, a swimming lane of nodes from Dolphins to Performance.
- *  Tap a squad to preview it; each panel links to the full squad page. */
+/** Interactive squad pathway — a swimming lane of squads from Dolphins to Performance.
+ *  The connecting line is styled like a pool lane rope; each squad sits on it as a
+ *  buoy with its own badge. Tap a squad to preview it; panels link to the full page. */
 import { getCollection } from "astro:content";
 
 const squads = (await getCollection("squads"))
@@ -9,12 +10,12 @@ const squads = (await getCollection("squads"))
 ---
 
 <div class="pathway" data-pathway>
-  <!-- Lane of nodes -->
+  <!-- Lane of squads -->
   <div class="relative">
-    <!-- The lane line -->
-    <div class="absolute left-6 top-0 h-full w-0.5 bg-gradient-to-b from-aqua-400/60 via-aqua-400/25 to-gold-400/50 lg:left-0 lg:top-1/2 lg:h-0.5 lg:w-full lg:bg-gradient-to-r" aria-hidden="true"></div>
+    <!-- The lane rope: alternating club-colour segments, like the real thing -->
+    <div class="lane-rope absolute left-7 top-4 bottom-4 w-1.5 rounded-full lg:left-4 lg:right-4 lg:top-7 lg:bottom-auto lg:h-1.5 lg:w-auto" aria-hidden="true"></div>
 
-    <div class="relative grid gap-2 lg:grid-cols-7 lg:gap-0" role="tablist" aria-label="Squad pathway">
+    <div class="relative grid gap-1.5 lg:grid-cols-7 lg:gap-0" role="tablist" aria-label="Squad pathway">
       {
         squads.map((squad, i) => (
           <button
@@ -24,17 +25,14 @@ const squads = (await getCollection("squads"))
             aria-selected={i === 0 ? "true" : "false"}
             aria-controls={`pathway-panel-${squad.id}`}
             data-pathway-tab={squad.id}
-            class="group relative flex items-center gap-4 rounded-2xl px-3 py-2.5 text-left transition lg:flex-col lg:gap-3 lg:py-4 lg:text-center"
+            class="group relative flex cursor-pointer items-center gap-4 rounded-2xl px-3 py-2 text-left transition hover:bg-foam-50 lg:flex-col lg:gap-2.5 lg:py-3 lg:text-center lg:hover:bg-transparent"
           >
-            <span
-              class="pathway-dot relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-aqua-400/40 bg-deep-800 font-display text-sm font-extrabold text-white transition-all duration-300 group-hover:border-aqua-300 group-hover:scale-105"
-              style="font-variation-settings: 'wdth' 85;"
-            >
-              {i + 1}
+            <span class="pathway-dot relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-foam-200 bg-white p-2 shadow-sm transition-all duration-300 group-hover:border-gold-400 group-hover:scale-105">
+              <img src={`/images/squad-${squad.id}.png`} alt="" class="h-full w-full object-contain" width="40" height="40" loading="lazy" />
             </span>
             <span class="flex flex-col lg:items-center">
-              <span class="pathway-label text-sm font-bold text-white/75 transition group-hover:text-white">{squad.data.name}</span>
-              <span class="text-xs text-white/40">{squad.data.ageGuide}</span>
+              <span class="pathway-label text-sm font-bold text-deep-800 transition">{squad.data.name}</span>
+              <span class="text-xs text-ink-400">{squad.data.ageGuide}</span>
             </span>
           </button>
         ))
@@ -51,32 +49,21 @@ const squads = (await getCollection("squads"))
           id={`pathway-panel-${squad.id}`}
           aria-labelledby={`pathway-tab-${squad.id}`}
           data-pathway-panel={squad.id}
-          class:list={["rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm sm:p-8", i !== 0 && "hidden"]}
+          class:list={["rounded-3xl border border-foam-200 bg-foam-50 p-6 sm:p-8", i !== 0 && "hidden"]}
         >
           <div class="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
             <div class="max-w-xl">
-              <div class="flex items-center gap-4">
-                <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white p-2">
-                  <img src={`/images/squad-${squad.id}.png`} alt="" class="h-full w-full object-contain" width="40" height="40" loading="lazy" />
-                </span>
-                <div>
-                  <p class="eyebrow text-aqua-400">{squad.data.tag} · {squad.data.hoursPerWeek} per week</p>
-                  <h3 class="display mt-1 text-3xl text-white">{squad.data.name}</h3>
-                </div>
-              </div>
-              <p class="mt-3 leading-relaxed text-white/70">{squad.data.strap}</p>
+              <p class="eyebrow text-aqua-600">{squad.data.tag} · {squad.data.hoursPerWeek} per week</p>
+              <h3 class="display mt-1.5 text-3xl text-deep-900">{squad.data.name}</h3>
+              <p class="mt-3 leading-relaxed text-ink-600">{squad.data.strap}</p>
               <ul class="mt-4 flex flex-wrap gap-2">
                 {squad.data.focus.slice(0, 3).map((f) => (
-                  <li class="rounded-full border border-white/15 px-3 py-1 text-xs font-semibold text-white/70">{f}</li>
+                  <li class="rounded-full border border-foam-200 bg-white px-3 py-1 text-xs font-semibold text-ink-600">{f}</li>
                 ))}
               </ul>
             </div>
-            <a
-              href={`/train/squads/${squad.id}`}
-              class="group inline-flex shrink-0 items-center gap-2 rounded-full border border-aqua-400/50 px-6 py-3 text-sm font-bold text-aqua-300 transition hover:bg-aqua-400 hover:text-deep-900"
-            >
-              Explore {squad.data.name}
-              <span class="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">→</span>
+            <a href={`/train/squads/${squad.id}`} class="btn-outline press shrink-0">
+              Explore {squad.data.name} <span aria-hidden="true">→</span>
             </a>
           </div>
         </div>
@@ -84,20 +71,42 @@ const squads = (await getCollection("squads"))
     }
   </div>
 
-  <p class="mt-6 text-sm text-white/45">
-    Plus our <a href="/train/squads/masters" class="font-semibold text-aqua-300 underline decoration-aqua-400/40 underline-offset-4 hover:text-aqua-400">Masters section</a> for adult swimmers, growing through our centenary year.
+  <p class="mt-6 text-sm text-ink-400">
+    Plus our <a href="/train/squads/masters" class="swim-link font-semibold text-aqua-600 hover:text-deep-800">Masters section</a> for adult swimmers, growing through our centenary year.
   </p>
 </div>
 
 <style>
+  /* Lane rope: alternating yellow / black discs with white spacers, club colours */
+  .lane-rope {
+    background: repeating-linear-gradient(
+      180deg,
+      var(--color-gold-400) 0 16px,
+      #ffffff 16px 22px,
+      var(--color-deep-900) 22px 38px,
+      #ffffff 38px 44px
+    );
+    opacity: 0.85;
+  }
+  @media (min-width: 1024px) {
+    .lane-rope {
+      background: repeating-linear-gradient(
+        90deg,
+        var(--color-gold-400) 0 16px,
+        #ffffff 16px 22px,
+        var(--color-deep-900) 22px 38px,
+        #ffffff 38px 44px
+      );
+    }
+  }
+
   [data-pathway-tab][aria-selected="true"] .pathway-dot {
-    background: var(--color-aqua-400);
-    border-color: var(--color-aqua-300);
-    color: var(--color-deep-900);
-    box-shadow: 0 0 24px color-mix(in srgb, var(--color-aqua-400) 55%, transparent);
+    border-color: var(--color-gold-400);
+    background: var(--color-gold-400);
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--color-gold-400) 45%, transparent);
   }
   [data-pathway-tab][aria-selected="true"] .pathway-label {
-    color: #fff;
+    color: var(--color-deep-900);
   }
 </style>
 

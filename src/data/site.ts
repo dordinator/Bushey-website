@@ -44,7 +44,7 @@ export const nav: NavGroup[] = [
       { label: "Squads", href: "/train/squads", description: "The pathway from Dolphins to Performance" },
       { label: "Coaches & teachers", href: "/train/coaches", description: "The team on poolside" },
       { label: "Training timetable", href: "/train/timetable", description: "Every session, every pool" },
-      { label: "Pool locations", href: "/train/locations", description: "Where we train across Hertfordshire" },
+      { label: "Pool locations", href: "/train/locations", description: "The five pools we train at" },
     ],
   },
   {

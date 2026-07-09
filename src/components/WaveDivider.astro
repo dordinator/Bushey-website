@@ -4,16 +4,18 @@
 interface Props {
   fill?: string;
   class?: string;
+  /** Tailwind height classes for the band; smaller = less prominent wave. */
+  height?: string;
 }
-const { fill = "#ffffff", class: className = "" } = Astro.props;
+const { fill = "#ffffff", class: className = "", height = "h-16 sm:h-24" } = Astro.props;
 ---
 
-<div class:list={["pointer-events-none absolute inset-x-0 bottom-0 h-16 overflow-hidden sm:h-24", className]} aria-hidden="true">
+<div class:list={["pointer-events-none absolute inset-x-0 bottom-0 overflow-hidden", height, className]} aria-hidden="true">
   <!-- Back wave (translucent, slower) -->
   <div class="wave-band wave-band--slow absolute bottom-0 flex w-[200%]" style="opacity:0.35">
     {
       [0, 1].map(() => (
-        <svg class="h-16 w-1/2 sm:h-24" viewBox="0 0 1440 96" preserveAspectRatio="none" fill={fill}>
+        <svg class:list={["w-1/2", height]} viewBox="0 0 1440 96" preserveAspectRatio="none" fill={fill}>
           <path d="M0,64 C240,96 480,16 720,40 C960,64 1200,96 1440,48 L1440,96 L0,96 Z" />
         </svg>
       ))
@@ -23,7 +25,7 @@ const { fill = "#ffffff", class: className = "" } = Astro.props;
   <div class="wave-band absolute bottom-0 flex w-[200%]">
     {
       [0, 1].map(() => (
-        <svg class="h-16 w-1/2 sm:h-24" viewBox="0 0 1440 96" preserveAspectRatio="none" fill={fill}>
+        <svg class:list={["w-1/2", height]} viewBox="0 0 1440 96" preserveAspectRatio="none" fill={fill}>
           <path d="M0,48 C260,110 520,10 780,42 C1040,74 1240,80 1440,36 L1440,96 L0,96 Z" />
         </svg>
       ))

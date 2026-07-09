@@ -22,16 +22,6 @@ const squads = (await getCollection("squads"))
 
   <section class="bg-white py-16 sm:py-24">
     <div class="mx-auto max-w-5xl px-5 sm:px-8">
-      <div class="reveal -mt-4 mb-12 overflow-hidden rounded-3xl shadow-lg shadow-deep-900/10">
-        <img
-          src="/images/pool-banner.jpg"
-          alt="Lane ropes stretching down a swimming pool"
-          class="h-36 w-full object-cover sm:h-44"
-          width="1024"
-          height="226"
-          loading="lazy"
-        />
-      </div>
       <div class="space-y-8">
         {
           squads.map((squad, i) => (

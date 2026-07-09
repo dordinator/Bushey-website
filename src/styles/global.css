@@ -1,35 +1,55 @@
 @import "tailwindcss";
 
-@theme {
-  /* ---- Brand palette ---- */
-  --color-deep-950: #030d18;
-  --color-deep-900: #051423;
-  --color-deep-800: #0a2540;
-  --color-deep-700: #103a5e;
-  --color-deep-600: #175081;
+/* =========================================================
+   BUSHEY ASC — redesigned theme (black + club yellow + warm paper)
+   Token NAMES are unchanged from the original build, so every existing page
+   keeps working — only their VALUES are retuned. That means this one file
+   reskins the whole site:
+     deep-*  = warm near-blacks (dark surfaces + headings)   was navy
+     gold-*  = the real club yellow                          was antique gold
+     foam-*  = warm paper / cream                            was pale blue
+     aqua-*  = the "water" accent, kept and used sparingly
+     ink-*   = warm body text
+   The display font is now Baloo 2 (friendly + rounded) in normal case, so
+   headings feel like a local club, not a corporate brand.
+   ========================================================= */
 
+@theme {
+  /* ---- Ink / dark surfaces (warm near-black) ---- */
+  --color-deep-950: #050505;
+  --color-deep-900: #0f0f0f;
+  --color-deep-800: #17130d;
+  --color-deep-700: #2a2521;
+  --color-deep-600: #3d372f;
+
+  /* ---- Water accent (kept — used sparingly for eyebrows, links, focus) ---- */
   --color-aqua-300: #7df3ff;
   --color-aqua-400: #38e1f5;
   --color-aqua-500: #10c5dd;
   --color-aqua-600: #0a9db4;
 
-  --color-gold-300: #f2d488;
-  --color-gold-400: #e3b341;
-  --color-gold-500: #c9992e;
+  /* ---- Club yellow ---- */
+  --color-gold-300: #ffdd66;
+  --color-gold-400: #ffc400; /* primary club yellow */
+  --color-gold-500: #e6a700;
+  /* Deep yellow that clears WCAG AA on paper/white for small text + labels. */
+  --color-gold-600: #8a6300;
 
-  --color-foam-50: #f4fafc;
-  --color-foam-100: #e8f3f7;
-  --color-foam-200: #d4e7ee;
+  /* ---- Warm paper ---- */
+  --color-foam-50: #f6f0e2;
+  --color-foam-100: #efe7d4;
+  --color-foam-200: #e3d9c2;
 
-  --color-ink-900: #0b1c2b;
-  --color-ink-600: #3d566b;
-  --color-ink-400: #6b8399;
+  /* ---- Body text (warm) ---- */
+  --color-ink-900: #17130d;
+  --color-ink-600: #574d3e;
+  --color-ink-400: #6a5f4d;
 
   /* ---- Type ---- */
-  --font-display: "Archivo Variable", "Archivo", "Arial Black", sans-serif;
+  --font-display: "Baloo 2 Variable", "Baloo 2", "Instrument Sans", system-ui, sans-serif;
   --font-body: "Inter Variable", "Inter", system-ui, sans-serif;
 
-  --tracking-mega: -0.03em;
+  --tracking-mega: -0.01em;
 
   /* ---- Motion ---- */
   --ease-swim: cubic-bezier(0.22, 1, 0.36, 1);
@@ -46,35 +66,40 @@ html {
 body {
   font-family: var(--font-body);
   color: var(--color-ink-900);
-  background: #ffffff;
+  background: var(--color-foam-50); /* warm paper, not clinical white */
   font-feature-settings: "ss01", "cv11";
 }
 
 ::selection {
-  background: var(--color-aqua-400);
+  background: var(--color-gold-400);
   color: var(--color-deep-900);
 }
 
+/* Consistent keyboard focus ring. :focus-visible keeps it to keyboard/AT
+   focus, never on mouse click. */
+:focus-visible {
+  outline: 2px solid var(--color-aqua-500);
+  outline-offset: 2px;
+}
+
 /* =========================================================
-   Display typography
+   Display typography — friendly rounded Baloo 2, normal case
    ========================================================= */
 .display {
   font-family: var(--font-display);
-  font-variation-settings: "wdth" 118;
-  font-weight: 800;
-  text-transform: uppercase;
+  font-weight: 700;
+  text-transform: none;
   letter-spacing: var(--tracking-mega);
-  line-height: 0.92;
+  line-height: 1.0;
   text-wrap: balance;
 }
 
 .display-condensed {
   font-family: var(--font-display);
-  font-variation-settings: "wdth" 78;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.01em;
-  line-height: 0.95;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+  line-height: 1.05;
 }
 
 .eyebrow {
@@ -94,7 +119,7 @@ body {
 /* =========================================================
    Scroll reveal (driven by src/scripts/reveal.js)
    ========================================================= */
-.reveal {
+.reveal-ready .reveal {
   opacity: 0;
   transform: translateY(28px);
   transition:
@@ -103,13 +128,13 @@ body {
   transition-delay: var(--reveal-delay, 0s);
 }
 
-.reveal.is-visible {
+.reveal-ready .reveal.is-visible {
   opacity: 1;
   transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
+  .reveal-ready .reveal {
     opacity: 1;
     transform: none;
     transition: none;
@@ -123,24 +148,14 @@ body {
    Water effects
    ========================================================= */
 @keyframes shimmer-drift {
-  0% {
-    transform: translate3d(-2%, 0, 0) scale(1.02);
-  }
-  50% {
-    transform: translate3d(2%, -1.5%, 0) scale(1.05);
-  }
-  100% {
-    transform: translate3d(-2%, 0, 0) scale(1.02);
-  }
+  0% { transform: translate3d(-2%, 0, 0) scale(1.02); }
+  50% { transform: translate3d(2%, -1.5%, 0) scale(1.05); }
+  100% { transform: translate3d(-2%, 0, 0) scale(1.02); }
 }
 
 @keyframes wave-slide {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 .wave-band {
@@ -153,67 +168,104 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .wave-band {
-    animation: none;
-  }
+  .wave-band { animation: none; }
 }
 
-/* Aqua gradient shimmer sweeping through headline text */
-@keyframes text-shimmer {
-  0% {
-    background-position: 200% center;
-  }
-  100% {
-    background-position: -200% center;
-  }
+/* Second-line accent for two-tone display headings. */
+.shimmer-text-ink {
+  color: var(--color-aqua-600);
 }
 
 .shimmer-text {
-  background: linear-gradient(
-    100deg,
-    #ffffff 38%,
-    var(--color-aqua-300) 50%,
-    #ffffff 62%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: text-shimmer 7s linear infinite;
+  color: var(--color-aqua-300);
 }
 
-/* Light-hero variant: deep navy type with an aqua light sweeping through */
-.shimmer-text-ink {
-  background: linear-gradient(
-    100deg,
-    var(--color-deep-800) 38%,
-    var(--color-aqua-500) 50%,
-    var(--color-deep-800) 62%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: text-shimmer 7s linear infinite;
+/* =========================================================
+   Hero photo collage (homepage)
+   ========================================================= */
+.hero-collage {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: 10px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .shimmer-text {
-    animation: none;
-    background: none;
-    color: #fff;
-  }
-  .shimmer-text-ink {
-    animation: none;
-    background: none;
-    color: var(--color-deep-800);
-  }
+.hero-tile {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--color-foam-200);
+}
+
+.hero-tile img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease-swim);
+}
+
+.hero-tile:hover img {
+  transform: scale(1.05);
+}
+
+/* Buttons -------------------------------------------------- */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.9rem 1.9rem;
+  border-radius: 999px;
+  background: var(--color-gold-400);
+  color: var(--color-deep-900);
+  transition: transform 0.2s var(--ease-swim), box-shadow 0.3s var(--ease-swim);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 14px 30px -12px color-mix(in srgb, var(--color-gold-500) 70%, transparent);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.8rem 1.6rem;
+  border-radius: 999px;
+  border: 2px solid var(--color-deep-900);
+  color: var(--color-deep-900);
+  transition: transform 0.2s var(--ease-swim), background 0.2s var(--ease-swim);
+}
+
+.btn-outline:hover {
+  background: color-mix(in srgb, var(--color-deep-900) 6%, transparent);
+}
+
+.btn-quiet {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-ink-600);
+}
+
+.btn-quiet:hover {
+  color: var(--color-deep-900);
 }
 
 /* =========================================================
    Misc components
    ========================================================= */
 .card-lift {
+  position: relative;
+  overflow: hidden;
   transition:
     transform 0.45s var(--ease-swim),
     box-shadow 0.45s var(--ease-swim);
@@ -221,7 +273,94 @@ body {
 
 .card-lift:hover {
   transform: translateY(-6px);
-  box-shadow: 0 24px 48px -16px rgb(5 20 35 / 0.25);
+  box-shadow: 0 24px 48px -16px rgb(15 15 15 / 0.22);
+}
+
+.card-lift::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    color-mix(in srgb, var(--color-aqua-300) 18%, transparent) 50%,
+    transparent 60%
+  );
+  transform: translateX(-130%);
+}
+
+.card-lift:hover::after {
+  animation: caustic-sweep 0.9s var(--ease-swim);
+}
+
+@keyframes caustic-sweep {
+  from { transform: translateX(-130%); }
+  to { transform: translateX(130%); }
+}
+
+.press:active {
+  transform: translateY(2px) scale(0.985);
+}
+
+/* Inline text link whose underline draws in from the left on hover. */
+.swim-link {
+  text-decoration: none;
+  background-image: linear-gradient(var(--color-aqua-400), var(--color-aqua-400));
+  background-repeat: no-repeat;
+  background-position: left 100%;
+  background-size: 0% 1.5px;
+  transition: background-size 0.4s var(--ease-swim);
+}
+
+.swim-link:hover,
+.swim-link:focus-visible {
+  background-size: 100% 1.5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-lift:hover::after { animation: none; }
+  .press:active { transform: none; }
+  .swim-link { transition: none; }
+  .hero-tile img { transition: none; }
+}
+
+/* =========================================================
+   Logo dolphin swim-in — one-time entrance (homepage, per session)
+   ========================================================= */
+.logo-empty {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle at 50% 52%,
+    var(--color-foam-50) 60%,
+    color-mix(in srgb, var(--color-foam-50) 92%, transparent) 70%,
+    transparent 80%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s var(--ease-swim);
+}
+
+[data-logo].is-swimming .logo-empty {
+  opacity: 1;
+}
+
+.swim-dolphin {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+.swim-dolphin-body {
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-empty { display: none; }
 }
 
 /* Thin gold rule used in centenary treatments */
@@ -235,7 +374,9 @@ body {
   );
 }
 
-/* Prose defaults for long-form article pages */
+/* =========================================================
+   Prose defaults for long-form article pages
+   ========================================================= */
 .prose-club {
   max-width: 42rem;
   font-size: 1.0625rem;
@@ -245,11 +386,10 @@ body {
 
 .prose-club h2 {
   font-family: var(--font-display);
-  font-variation-settings: "wdth" 110;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
-  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  font-size: 1.6rem;
   line-height: 1.1;
   margin-top: 2.5rem;
   margin-bottom: 0.875rem;
@@ -303,15 +443,15 @@ body {
 }
 
 .prose-club a {
-  color: var(--color-deep-600);
+  color: var(--color-aqua-600);
   font-weight: 600;
   text-decoration: underline;
-  text-decoration-color: var(--color-aqua-400);
+  text-decoration-color: var(--color-gold-400);
   text-underline-offset: 3px;
 }
 
 .prose-club a:hover {
-  color: var(--color-aqua-600);
+  color: var(--color-deep-800);
 }
 
 .prose-club strong {
@@ -319,7 +459,7 @@ body {
 }
 
 .prose-club blockquote {
-  border-left: 3px solid var(--color-aqua-400);
+  border-left: 3px solid var(--color-gold-400);
   padding-left: 1.25rem;
   font-style: italic;
   color: var(--color-ink-600);
