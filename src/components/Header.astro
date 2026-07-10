@@ -108,10 +108,10 @@ const isActive = (href: string) =>
     </div>
   </div>
 
-  <!-- Mobile menu -->
+  <!-- Mobile menu (relative + z so it paints above the absolute header backdrop) -->
   <div
     id="mobile-menu"
-    class="hidden max-h-[calc(100dvh-68px)] overflow-y-auto border-t border-foam-200 bg-white lg:hidden"
+    class="relative z-10 hidden max-h-[calc(100dvh-68px)] overflow-y-auto border-t border-foam-200 bg-white lg:hidden"
     data-mobile-menu
   >
     <nav class="mx-auto max-w-7xl space-y-6 px-6 py-8" aria-label="Mobile">
